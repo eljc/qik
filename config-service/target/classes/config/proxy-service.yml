@@ -15,3 +15,6 @@ zuul:
     dish:
       path: /dish/**
       serviceId: dish-api
+    food:
+      path: /food/**
+      serviceId: food-store-api

@@ -23,6 +23,12 @@ spring:
         - Path=/dish/**
         filters:
         - RewritePath=/dish/(?<path>.*), /$\{path} 
+      - id: food-store-api
+        uri: lb://food-store-api
+        predicates:
+        - Path=/food/**
+        filters:
+        - RewritePath=/food/(?<path>.*), /$\{path} 
       - id: openapi
         uri: http://localhost:${server.port}
         predicates:
@@ -35,3 +41,5 @@ springdoc:
     urls:
       - name: dish
         url: /v3/api-docs/dish
+      - name: food
+        url: /v3/api-docs/food

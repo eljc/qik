@@ -15,35 +15,41 @@ import com.eljc.qik.repository.DishRepository;
 @Service
 public class DishService {
 
-	   @Autowired
-	    private DishRepository dishRepository;
+	@Autowired
+	private DishRepository dishRepository;
 
-	    public List<DishDTO> findAll(){
-	        return dishRepository.findAll().stream()
-	        		.map(DishDTO::new)
-	        		.collect(Collectors
-	        				.toCollection(ArrayList::new));
-	    }
+	public List<DishDTO> findAll() {
+		return dishRepository.findAll().stream().map(DishDTO::new).collect(Collectors.toCollection(ArrayList::new));
+	}
 
-	    public DishDTO findByID(Long id){
-	        Optional<Dish> dish = dishRepository.findById(id);
-	        DishDTO dishDTO = new DishDTO(dish.get());
-	        return dishDTO;
-	    }
-	    
-	    public List<DishDTO> findByName(String name){
-	    	
-	    	List<Dish> listDish = new ArrayList<>();
-	    	
-	    	Optional<List<Dish>> optDish = dishRepository.findByName(name);
-	    	if(optDish.isPresent())
-	    		listDish.addAll(optDish.get());
-	    	
-	    	return listDish.stream()
-    		.map(DishDTO::new)
-    		.collect(Collectors
-    				.toCollection(ArrayList::new));
-	    	
-	        
-	    }
+	public Optional<Dish> findByID(Long id) {
+		Optional<Dish> dish = dishRepository.findById(id);
+		if(dish.isPresent()) {
+			return Optional.of(dish.get());
+		}
+		return Optional.empty();
+	}
+
+	public List<DishDTO> findByName(String name) {
+
+		List<Dish> listDish = new ArrayList<>();
+
+		Optional<List<Dish>> optDish = dishRepository.findByName(name);
+		if (optDish.isPresent())
+			listDish.addAll(optDish.get());
+
+		return listDish.stream().map(DishDTO::new).collect(Collectors.toCollection(ArrayList::new));
+
+	}
+	
+	public DishDTO save(Dish dish) {
+		Dish disSave = dishRepository.save(dish);
+		DishDTO dishDTO = new DishDTO(disSave);
+		
+		return dishDTO;		
+	}
+	
+	public void deleteByID(Long id) {
+		dishRepository.deleteById(id);		
+	}
 }
