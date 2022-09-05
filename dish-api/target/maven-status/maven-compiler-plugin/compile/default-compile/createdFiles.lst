@@ -1,0 +1,6 @@
+com\eljc\qik\DishesApiApplication.class
+com\eljc\qik\model\dto\DishDTO.class
+com\eljc\qik\api\DishController.class
+com\eljc\qik\model\Dish.class
+com\eljc\qik\repository\DishRepository.class
+com\eljc\qik\service\DishService.class
