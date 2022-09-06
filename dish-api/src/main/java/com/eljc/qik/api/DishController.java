@@ -2,7 +2,6 @@ package com.eljc.qik.api;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import com.eljc.qik.model.Dish;
 import com.eljc.qik.model.dto.DishDTO;
@@ -20,14 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @CrossOrigin(origins = "http://localhost:8060")
 @RestController
 public class DishController {
-	protected Logger logger = Logger.getLogger(DishController.class.getName());
+	
 
 	@Autowired
     private DishService dishService;
@@ -53,7 +51,7 @@ public class DishController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Server Error")
     })
-    public DishDTO authenticate(@RequestBody DishDTO dishDto) {
+    public DishDTO save(@RequestBody DishDTO dishDto) {
         Dish dish = dishDto.toEntity();
 
         DishDTO dto = dishService.save(dish);
