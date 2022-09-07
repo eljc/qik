@@ -3,11 +3,9 @@ package com.eljc.qik.api;
 import java.util.List;
 import java.util.Optional;
 
-import com.eljc.qik.model.Dish;
-import com.eljc.qik.model.dto.DishDTO;
-import com.eljc.qik.service.DishService;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,16 +17,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eljc.qik.model.Dish;
+import com.eljc.qik.model.dto.DishDTO;
+import com.eljc.qik.service.DishService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-@CrossOrigin(origins = "http://localhost:8060")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class DishController {
 	
 
 	@Autowired
     private DishService dishService;
+	
 	
 	@GetMapping("/listAll")
     @ResponseBody
@@ -37,7 +40,8 @@ public class DishController {
             @ApiResponse(responseCode = "200", description = "List of Dish"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Server Error")
-    })	
+    })
+	@Cacheable(value = "list")
     public List<DishDTO> listAll() {
         return dishService.findAll();
 
@@ -51,6 +55,7 @@ public class DishController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Server Error")
     })
+    @CacheEvict(value = "list")
     public DishDTO save(@RequestBody DishDTO dishDto) {
         Dish dish = dishDto.toEntity();
 
@@ -98,6 +103,7 @@ public class DishController {
             @ApiResponse(responseCode = "404", description = "ID not found"),
             @ApiResponse(responseCode = "500", description = "Server Error")
     })
+    @CacheEvict(value = "list")
     public  ResponseEntity<HttpStatus> removeDish(@RequestParam(required = true) Long idDish) {
     	try {
     		dishService.deleteByID(idDish);
