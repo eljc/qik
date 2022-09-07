@@ -10,11 +10,12 @@
 	<description>Root project</description>
 
 	<modules>
+		<module>config-service</module>
+		<module>discovery-service</module>
 		<module>dish-api</module>
 		<module>gateway-service</module>
-		<module>discovery-service</module>
-		<module>config-service</module>
 		<module>food-store-api</module>
+		<module>user-service</module>
 	</modules>
 
 	<build>

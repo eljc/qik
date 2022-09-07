@@ -22,19 +22,7 @@ spring:
         predicates:
         - Path=/dish/**
         filters:
-        - RewritePath=/dish/(?<path>.*), /$\{path} 
-      - id: food-store-api
-        uri: lb://food-store-api
-        predicates:
-        - Path=/food/**
-        filters:
-        - RewritePath=/food/(?<path>.*), /$\{path} 
-      - id: auth-service
-        uri: lb://auth-service
-        predicates:
-        - Path=/auth/**
-        filters:
-        - RewritePath=/auth/(?<path>.*), /$\{path}
+        - RewritePath=/dish/(?<path>.*), /$\{path}
       - id: user-service
         uri: lb://user-service
         predicates:
@@ -55,3 +43,6 @@ springdoc:
         url: /v3/api-docs/dish
       - name: food
         url: /v3/api-docs/food
+      - name: user
+        url: /v3/api-docs/user
+        

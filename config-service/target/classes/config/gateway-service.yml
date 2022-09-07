@@ -1,10 +1,10 @@
 server:
-  port: 8060
+  port: 8080
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8061/eureka/
+      defaultZone: http://localhost:8761/eureka/
 
 logging:
   pattern: 
@@ -22,13 +22,13 @@ spring:
         predicates:
         - Path=/dish/**
         filters:
-        - RewritePath=/dish/(?<path>.*), /$\{path} 
-      - id: food-store-api
-        uri: lb://food-store-api
+        - RewritePath=/dish/(?<path>.*), /$\{path}
+      - id: user-service
+        uri: lb://user-service
         predicates:
-        - Path=/food/**
+        - Path=/user/**
         filters:
-        - RewritePath=/food/(?<path>.*), /$\{path} 
+        - RewritePath=/user/(?<path>.*), /$\{path} 
       - id: openapi
         uri: http://localhost:${server.port}
         predicates:
@@ -43,3 +43,6 @@ springdoc:
         url: /v3/api-docs/dish
       - name: food
         url: /v3/api-docs/food
+      - name: user
+        url: /v3/api-docs/user
+        
