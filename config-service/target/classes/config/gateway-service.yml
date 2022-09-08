@@ -28,7 +28,14 @@ spring:
         predicates:
         - Path=/user/**
         filters:
-        - RewritePath=/user/(?<path>.*), /$\{path} 
+        - RewritePath=/user/(?<path>.*), /$\{path}
+      - id: food-store-api
+        uri: lb://food-store-api
+        predicates:
+          - Path=/food/**
+        filters:
+          - RewritePath=/food/(?<path>.*), /$\{path}
+          - AuthFilter
       - id: openapi
         uri: http://localhost:${server.port}
         predicates:

@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-@CrossOrigin(origins = "http://localhost:8060")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController("/store")
 public class FooStoreController {
 	
@@ -37,7 +37,6 @@ public class FooStoreController {
 		
 		
 		return dishClient.getAllDishes();
-        //return dishService.listAll();
 
     }
 

@@ -16,6 +16,7 @@
 		<module>gateway-service</module>
 		<module>food-store-api</module>
 		<module>user-service</module>
+		<module>auth-service</module>
 	</modules>
 
 	<build>
