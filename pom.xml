@@ -13,10 +13,10 @@
 		<module>config-service</module>
 		<module>discovery-service</module>
 		<module>dish-api</module>
-		<module>gateway-service</module>
 		<module>food-store-api</module>
 		<module>user-service</module>
 		<module>auth-service</module>
+		<module>gateway-service</module>
 	</modules>
 
 	<build>
