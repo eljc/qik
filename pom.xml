@@ -15,7 +15,6 @@
 		<module>dish-api</module>
 		<module>food-store-api</module>
 		<module>user-service</module>
-		<module>auth-service</module>
 		<module>gateway-service</module>
 	</modules>
 

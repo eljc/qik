@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  config-service:
+    image: docker-config-service:0.0.1-SNAPSHOT
+    build: config-service/
+    hostname: config-service
+    ports:
+      - 8088:8088
+    environment:
+      - eureka.client.service-url.defaultZone=http://disovery-service:8761/eureka
+    depends_on:
+      - disovery-service
+  disovery-service:
+    image: docker-discovery-service:0.0.1-SNAPSHOT
+    build: discovery-service/
+    hostname: discovery-service
+    environment:
+      - spring.main.banner-mode="off"
+      - spring.cloud.config.uri=http://config-service:8088
+    ports:
+      - 8761:8761
+  dish-api:
+    image: docker-dish-api:0.0.1-SNAPSHOT
+    build: dish-api/
+    hostname: dish-api
+    environment:
+      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://disovery-service:8761/eureka"}}}}'
+    depends_on:
+     - disovery-service
+    ports:
+      - 8081:8081
+  food-sotre-api:
+    image: docker-food-store-api:0.0.1-SNAPSHOT
+    build: food-store-api/
+    hostname: food-store-api
+    environment:
+      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://disovery-service:8761/eureka"}}}}'
+    depends_on:
+      - disovery-service
+    ports:
+      - 8082:8082
+  gateway-service:
+    image: docker-gateway-service:0.0.1-SNAPSHOT
+    build: gateway-service/
+    hostname: gateway
+    environment:
+      - spring.cloud.config.uri=http://config-service:8088
+      - eureka.client.service-url.defaultZone=http://disovery-service:8761/eureka
+    depends_on:
+      - config-service
+      - disovery-service
+      - dish-api
+      - food-store-api
+    ports:
+      - 8080:8080
