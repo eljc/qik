@@ -1,0 +1,24 @@
+server:
+  port: 8090
+
+management:
+  endpoint.gateway.enabled: true
+  endpoints.web.exposure.include: gateway
+
+spring:
+  application.name: auth-service
+  cloud:
+    gateway:
+      discovery.locator.enabled: true
+      routes:        
+       - id: food-api
+         uri: lb://food-api
+         predicates:
+          - Path=/food/**
+         filters:
+          - AuthFilter  
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
